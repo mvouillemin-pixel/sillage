@@ -1,0 +1,480 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+/* Polices auto-hébergées (latin) : supprime la chaîne bloquante vers Google Fonts. */
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-serif/latin-400.css";
+@import "@fontsource/ibm-plex-serif/latin-500.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * SILLAGE — système de design.
+ * Palette végétale : vert forêt, sauge, menthe, blanc cassé, ardoise.
+ * Verdicts à quatre couleurs. Confiance en gradient à cinq paliers.
+ * Toute couleur en oklch, aucune couleur codée en dur dans les composants.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "IBM Plex Serif", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sage: var(--sage);
+  --color-mint: var(--mint);
+  --color-slate-ink: var(--slate-ink);
+  --color-verdict-serre: var(--verdict-serre);
+  --color-verdict-ajuste: var(--verdict-ajuste);
+  --color-verdict-conforme: var(--verdict-conforme);
+  --color-verdict-ample: var(--verdict-ample);
+  --color-verdict-foreground: var(--verdict-foreground);
+  --color-confiance-1: var(--confiance-1);
+  --color-confiance-2: var(--confiance-2);
+  --color-confiance-3: var(--confiance-3);
+  --color-confiance-4: var(--confiance-4);
+  --color-confiance-5: var(--confiance-5);
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Courbes et durées : tout est lent, rien ne claque */
+  --ease-apparition: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-etat: cubic-bezier(0.65, 0, 0.35, 1);
+  --duree-apparition: 520ms;
+  --duree-etat: 420ms;
+
+  /* Ombres très diffuses, presque absentes */
+  --shadow-diffuse: 0 18px 48px -12px oklch(0.28 0.021 240 / 6%);
+  --shadow-diffuse-forte: 0 24px 60px -10px oklch(0.28 0.021 240 / 8%);
+
+  /* Blanc cassé / beige / ardoise */
+  --background: oklch(0.9788 0.0043 106.47);
+  --foreground: oklch(0.28 0.021 240);
+  --card: oklch(0.9905 0.0026 106.47);
+  --card-foreground: oklch(0.28 0.021 240);
+  --popover: oklch(0.9905 0.0026 106.47);
+  --popover-foreground: oklch(0.28 0.021 240);
+
+
+  /* Vert forêt (#2E7D32 assombri d'un cran pour le contraste du texte) */
+  --primary: oklch(0.42 0.108 148);
+  --primary-foreground: oklch(0.975 0.008 106);
+
+  /* Sauge (#A5D6A7) */
+  --secondary: oklch(0.8548 0.0723 145.62);
+  --secondary-foreground: oklch(0.3 0.045 155);
+
+  /* Beige (#F2EFE6) */
+  --muted: oklch(0.9524 0.0102 92.2);
+  --muted-foreground: oklch(0.5 0.018 200);
+
+  /* Menthe (#C8E6C9) */
+  --accent: oklch(0.9091 0.0508 145.35);
+  --accent-foreground: oklch(0.32 0.055 155);
+
+  --destructive: oklch(0.52 0.17 27);
+  --destructive-foreground: oklch(0.985 0.005 106);
+
+  --border: oklch(0.918 0.0105 105);
+  --input: oklch(0.918 0.0105 105);
+
+  --ring: oklch(0.55 0.06 160);
+
+  --sage: oklch(0.8548 0.0723 145.62);
+  --mint: oklch(0.9091 0.0508 145.35);
+  --slate-ink: oklch(0.38 0.024 235);
+
+  /* Verdicts : rouge, ambre, vert, bleu */
+  --verdict-serre: oklch(0.53 0.17 27);
+  /* Ambre assombri : contraste AA du texte sur blanc cassé et du badge sur ambre */
+  --verdict-ajuste: oklch(0.48 0.115 62);
+  --verdict-conforme: oklch(0.5 0.11 155);
+  --verdict-ample: oklch(0.53 0.1 245);
+  --verdict-foreground: oklch(0.985 0.005 106);
+
+  /* Confiance : gradient végétal à cinq paliers (#C8E6C9 → #2E7D32) */
+  --confiance-1: oklch(0.9091 0.0508 145.35);
+  --confiance-2: oklch(0.8548 0.0723 145.62);
+  --confiance-3: oklch(0.7024 0.1381 146.6);
+  --confiance-4: oklch(0.6146 0.1519 146.9);
+  --confiance-5: oklch(0.4941 0.1219 148.1);
+
+  --fond-motif-marketing: 0.24;
+  --fond-motif-app: 0.1;
+  --fond-couleur-marketing: 34%;
+  --fond-couleur-app: 24%;
+  --fond-couleur-discret: 14%;
+
+}
+
+.dark {
+  --background: oklch(0.22 0.018 235);
+  --foreground: oklch(0.96 0.008 106);
+  --card: oklch(0.26 0.02 235);
+  --card-foreground: oklch(0.96 0.008 106);
+  --popover: oklch(0.26 0.02 235);
+  --popover-foreground: oklch(0.96 0.008 106);
+  --primary: oklch(0.78 0.07 155);
+  --primary-foreground: oklch(0.22 0.03 155);
+  --secondary: oklch(0.33 0.03 160);
+  --secondary-foreground: oklch(0.94 0.02 145);
+  --muted: oklch(0.3 0.02 235);
+  --muted-foreground: oklch(0.72 0.015 200);
+  --accent: oklch(0.36 0.045 165);
+  --accent-foreground: oklch(0.94 0.03 165);
+  --destructive: oklch(0.6 0.17 27);
+  --destructive-foreground: oklch(0.98 0.005 106);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.65 0.07 160);
+  --sage: oklch(0.6 0.04 145);
+  --mint: oklch(0.7 0.07 168);
+  --slate-ink: oklch(0.8 0.02 235);
+  --verdict-serre: oklch(0.63 0.17 27);
+  --verdict-ajuste: oklch(0.75 0.13 70);
+  --verdict-conforme: oklch(0.66 0.11 155);
+  --verdict-ample: oklch(0.66 0.1 245);
+  --verdict-foreground: oklch(0.18 0.01 235);
+  /* Confiance en sombre : même famille, lisibilité inversée */
+  --confiance-1: oklch(0.4941 0.1219 148.1);
+  --confiance-2: oklch(0.6146 0.1519 146.9);
+  --confiance-3: oklch(0.7024 0.1381 146.6);
+  --confiance-4: oklch(0.8548 0.0723 145.62);
+  --confiance-5: oklch(0.9091 0.0508 145.35);
+  --fond-motif-marketing: 0.18;
+  --fond-motif-app: 0.08;
+  --fond-couleur-marketing: 24%;
+  --fond-couleur-app: 18%;
+  --fond-couleur-discret: 10%;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+  }
+
+  /* Aucun changement d'état instantané : tout glisse */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  label,
+  [class*="rounded"],
+  [class*="bg-verdict"],
+  [class*="bg-confiance"] {
+    transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+    transition-duration: var(--duree-etat);
+    transition-timing-function: var(--ease-etat);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 1ms !important;
+      animation-duration: 1ms !important;
+    }
+  }
+}
+
+html {
+  background-color: var(--color-background);
+}
+
+.fond-sillage {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  color: color-mix(in oklch, var(--color-primary) 52%, var(--color-border));
+  background: linear-gradient(
+    180deg,
+    var(--color-background) 0%,
+    var(--color-muted) 55%,
+    var(--color-background) 100%
+  );
+}
+
+.fond-sillage--marketing {
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in oklch, var(--color-mint) var(--fond-couleur-marketing), transparent) 0%, transparent 46%),
+    radial-gradient(circle at 88% 34%, color-mix(in oklch, var(--color-secondary) 26%, transparent) 0%, transparent 44%),
+    linear-gradient(180deg, color-mix(in oklch, var(--color-background) 70%, var(--color-mint)) 0%, var(--color-muted) 54%, var(--color-background) 100%);
+}
+
+.fond-sillage--app {
+  background:
+    radial-gradient(circle at 86% 12%, color-mix(in oklch, var(--color-mint) var(--fond-couleur-app), transparent) 0%, transparent 44%),
+    radial-gradient(circle at 8% 82%, color-mix(in oklch, var(--color-secondary) 20%, transparent) 0%, transparent 42%),
+    linear-gradient(180deg, var(--color-background) 0%, color-mix(in oklch, var(--color-muted) 78%, var(--color-mint)) 56%, var(--color-background) 100%);
+}
+
+.fond-sillage--discret {
+  background: linear-gradient(
+    180deg,
+    var(--color-background) 0%,
+    color-mix(in oklch, var(--color-muted) calc(100% - var(--fond-couleur-discret)), var(--color-mint)) 55%,
+    var(--color-background) 100%
+  );
+}
+
+.fond-sillage__motif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.fond-sillage--marketing .fond-sillage__motif {
+  height: 100svh;
+  opacity: var(--fond-motif-marketing);
+  mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+}
+
+.fond-sillage--app .fond-sillage__motif {
+  opacity: var(--fond-motif-app);
+}
+
+@keyframes sillage-apparition {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Crossfade + léger glissement vertical, jamais de latéral */
+@utility apparition {
+  animation: sillage-apparition var(--duree-apparition) var(--ease-apparition) both;
+}
+
+@keyframes sillage-fondu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fondu bref (150 ms) pour les changements d'étape et l'apparition de blocs. */
+@utility fondu-etape {
+  animation: sillage-fondu 150ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fondu-etape {
+    animation: none !important;
+  }
+}
+
+
+@utility surface-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-diffuse);
+  transition:
+    box-shadow var(--duree-etat) var(--ease-etat),
+    transform var(--duree-etat) var(--ease-etat);
+}
+
+/* Survol quasi imperceptible */
+@utility survol-doux {
+  transition:
+    transform var(--duree-etat) var(--ease-etat),
+    opacity var(--duree-etat) var(--ease-etat),
+    border-color var(--duree-etat) var(--ease-etat),
+    box-shadow var(--duree-etat) var(--ease-etat);
+  &:hover {
+    transform: scale(1.012);
+    box-shadow: var(--shadow-diffuse-forte);
+  }
+  &:active {
+    transform: scale(0.995);
+  }
+}
+
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-muted-foreground);
+}
+
+/* Sortie d'étape : fondu + très léger glissement vers le haut. */
+@keyframes sillage-etape-sortie {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes sillage-etape-entree {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility etape-sortie {
+  animation: sillage-etape-sortie 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility etape-entree {
+  animation: sillage-etape-entree 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Apparition d'un bloc conditionnel après une sélection. */
+@utility bloc-conditionnel {
+  animation: sillage-etape-entree 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Retour tactile immédiat sur les cartes sélectionnables. */
+@utility carte-pressable {
+  transition:
+    transform 130ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 130ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 130ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 130ms cubic-bezier(0.22, 1, 0.36, 1);
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Résultat : entrée un peu plus posée, puis révélation de la taille. */
+@keyframes sillage-resultat {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sillage-taille {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@utility resultat-entree {
+  animation: sillage-resultat 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility taille-revelee {
+  animation: sillage-taille 250ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .etape-sortie,
+  .etape-entree,
+  .bloc-conditionnel,
+  .resultat-entree,
+  .taille-revelee {
+    animation: none !important;
+  }
+
+  .carte-pressable {
+    transition: none !important;
+  }
+}
+
+/* Révélation au scroll (composant Reveal, src/components/motion).
+   L'état masqué n'existe que côté client, après hydratation, et jamais avec
+   « réduire les animations » : le contenu reste accessible dans tous les cas. */
+:root {
+  --reveal-distance: 14px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --reveal-distance: 8px;
+  }
+}
+
+.reveal[data-reveal="cache"] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance), 0);
+  will-change: opacity, transform;
+}
+
+.reveal[data-reveal="visible"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duree-apparition) var(--ease-apparition) var(--reveal-delay, 0ms),
+    transform var(--duree-apparition) var(--ease-apparition) var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
